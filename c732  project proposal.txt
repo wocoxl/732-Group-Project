@@ -1,0 +1,186 @@
+﻿whole pipeline
+collect diff data source
+-dirty data needed cleaning (ETL)
+-hive-style partition
+-
+cloud storage
+-store in aws
+
+
+pyspark (must)
+
+
+design own algorithm
+-cannot just parameters
+
+
+Past projects
+https://github.com/banerj10/CMPT732_NYT_User_Engagement/blob/master/Documents/CMPT732%20Project%20Proposal%20-%20Data%20Knyts.pdf
+
+
+Possible ideas
+Flight data
+* Explore correlation between delay and other fields (departure airport, arrival airport, season, time of day of departure, airline, etc)
+* Visualiztion
+* Perdicition
+* Download and store data on s3 buckets
+* Clean and store on s3
+* 
+Before Monday October 26 2026, submit a brief proposal (≤1 page). Please indicate the proposed topic/analysis/product, as well as the technologies you intend to use. We will provide some feedback on your proposed project. 
+
+Weather climate
+Airline, airport
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+C732 Team Project Proposal
+Mingran Chen(mca410), Wei Cai(wca162) Yun Tian(yta114) Zehua Li(zla330)
+Dataset
+Our project will focus on monthly updated flight data on US domestic flights from the Bureau of Transportation Statistics. It contains 109 different fields that covers information including date, aircraft information, airline information, origin, destination, delay causes, ground movement, etc. This dataset is chosen because 
+   * It contains a large number of detailed flight-level records, allowing us to evaluate how our pipeline scales as the amount of data increases. 
+   * It has a consistent structure and is updated monthly, making it easier to combine historical records and incorporate new data. 
+   * It is publicly available, allowing us to obtain the data without paid access and make our analysis reproducible. 
+   * It provides opportunities for meaningful data cleaning, including handling missing values, cancelled flights, and time-related fields. 
+Analysis
+        We want to explore the relationships between flight delay information and other fields within this dataset (and other datasets if one arises) . Specifically, we aim to examine the following relations:
+   * Delay propagation: Does a late arrival cause further delays on the same aircraft’s later flights? If so, can we predict the delay time on the later flights?
+   * Reliability: Can we rank the reliability of airports, routes, or airlines based on delay information?
+   * Delay factors: Which factors are associated with the highest probability of a flight delay, and which are associated with the longest average delay? We will include flight origin and destination airport weather for this question. https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py 
+For each question, we will first examine the dataset to find the related fields for each data, and clean the dataset accordingly. This first part would take 2-3 days to complete. Then, researching and implementing the solutions to the above questions would take 3-4 days. 
+
+
+Product
+        We will develop an interactive visualization dashboard to present our analysis of flight data through graphs and tables. The dashboard will highlight key patterns, trends, and comparisons identified in our analysis. We estimate that this will take 4 days to complete. Then, we will develop one or two predictive features if the data demonstrates sufficient predictive value. Any predictive models will be evaluated on held-out data and compared against simple baseline methods to assess their performance. Implementing and training our model will take the remaining 1.5 weeks.
+
+
+Technology
+        We will use PySpark to extract, transform, and load (ETL) the flight data, with Amazon S3 providing storage for raw data and processed results. Apache Spark workloads will run on Amazon EMR clusters to support scalable processing and analysis. Additional technologies for visualization tools, Matplotlib(on Jupyter Notebook) and predictive modelling may be introduced as the project requirements evolve.
+To do: 
+1)github set up
+2)ETL
+-extract
+Download directly from link for now
+on_time_marketing_carrier
+-clean
+identify columns needed for each sub question
+use spark dataframe to clean data
+-load
+make use of aws tools
+3) answer each questions locally (divided)
+-
+
+
+4)implement using related tools etc
+
+
+5) visualization
+6) perdiction
+7) final project video
+8) project report + ai usage report
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Cancelled!=1, DivAirportLandings==0
+
+
+Flight Information
+Flight Date, Operating_Airline, Flight_Number_Marketing_Airline, OriginCityName, Origin, Dest, DestCityName 
+
+
+Time
+CRSDepTime, DepTime, DepDelayMinutes, 
+CRSArrTime, ArrTime ,ArrDelayMinutes 
+
+
+Delay
+CarrierDelay, WeatherDelay, SecurityDelay, LateAircraftDelay   
+
+
+
+
+
+
+Analysis Questions
+   * Delay propagation: Does a late arrival cause further delays on the same aircraft’s later flights? If so, can we predict the delay time on the later flights?
+Columns needed:        Tail_Number
+                        
+                        
+
+
+
+
+   * Reliability: Can we rank the reliability of airports, routes, or airlines based on delay information?
+Route : Origin = dest (self-join)
+
+
+
+
+
+
+   * Delay factors: Which factors are associated with the highest probability of a flight delay, and which are associated with the longest average delay? We will include flight origin and destination airport weather for this question. https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py 
+Columns needed: 
+        
+        CarrierDelay, airline
+        WeatherDelay, weather
+SecurityDelay, airport
+LateAircraftDelay, route
